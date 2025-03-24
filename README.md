@@ -1,2 +1,2 @@
-# LabSEFW5
+# student-manager
 StudentManager
