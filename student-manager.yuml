@@ -1,0 +1,60 @@
+/**
+ * Define Actors
+ */
+[Student]
+[Teacher]
+[Admin]
+
+/**
+ * Use a package-like grouping for the system boundary
+ */
+[Student Manager] {
+  (Log in),
+  (Verify credentials),
+  (Display Account Locked Error),
+  (View details),
+  (View grades),
+  (View students),
+  (Add student),
+  (Display Account Already Added Error),
+  (Add grades),
+  (Inspect statistical data),
+  (Create account),
+  (Display Account Already Created Error),
+  (Add subjects)
+}
+
+/**
+ * Student's use cases
+ */
+[Student] - (View details)
+[Student] - (View grades)
+(View details) <(Log in) : <<include>>
+(View grades) <(Log in) : <<include>>
+
+/**
+ * Teacher's use cases
+ */
+[Teacher] - (View students)
+[Teacher] - (Add student)
+[Teacher] - (Add grades)
+(View students) <(Log in) : <<include>>
+(Add student) <(Log in) : <<include>>
+(Add student) <|-- (Display Account Already Added Error) : <<extend>>
+(Add grades) <(Log in) : <<include>>
+(Add grades) <|-- (Inspect statistical data) : <<extend>>
+
+/**
+ * Admin's use cases
+ */
+[Admin] - (Create account)
+[Admin] - (Add subjects)
+(Create account) <(Log in) : <<include>>
+(Create account) <|-- (Display Account Already Created Error) : <<extend>>
+(Add subjects) <(Log in) : <<include>>
+
+/**
+ * Internal detail of "Log in" 
+ */
+(Log in) <(Verify credentials) : <<include>>
+(Log in) <|-- (Display Account Locked Error) : <<extend>>
